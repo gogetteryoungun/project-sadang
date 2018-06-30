@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 
 class Dashboard extends Component {
+
+  componentDidMount() {
+    console.log("dashboard.tickers: " + JSON.stringify(this.props.tickers));
+  }
+
+  componentWillUpdate(nextState) {
+    console.log("dashboard.willUpdate: " + JSON.stringify(nextState));
+  }
+
   render() {
     return (
 <Table responsive>

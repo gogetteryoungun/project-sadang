@@ -7,7 +7,7 @@ const exchangeApi = {
       method: 'GET',
     })
     .then((response) => {
-      console.log(`[Exchange Response] Bithumb Response: ${JSON.stringify(response)}`);
+//      console.log(`[Exchange Response] Bithumb Response: ${JSON.stringify(response)}`);
       return { exchange: 'bithumb', response };
     });
   },
@@ -18,7 +18,7 @@ const exchangeApi = {
       method: 'GET',
     })
     .then((response) => {
-      console.log(`[Exchange Response] Korbit Response: ${JSON.stringify(response)}`);
+//      console.log(`[Exchange Response] Korbit Response: ${JSON.stringify(response)}`);
       return { exchange: 'korbit', response };
     });
   },
@@ -28,7 +28,7 @@ const exchangeApi = {
       method: 'GET',
     })
     .then((response) => {
-      console.log(`[Exchange Response] Coinone Response: ${JSON.stringify(response)}`);
+//      console.log(`[Exchange Response] Coinone Response: ${JSON.stringify(response)}`);
       return { exchange: 'coinone', response };
     });
   },
@@ -39,7 +39,7 @@ const exchangeApi = {
       method: 'GET',
     })
     .then((response) => {
-      console.log(`[Exchange Response] Bitstamp Response: ${JSON.stringify(response)}`);
+//      console.log(`[Exchange Response] Bitstamp Response: ${JSON.stringify(response)}`);
       return { exchange: 'bitstamp', response };
     });
   },
@@ -61,7 +61,7 @@ const exchangeApi = {
       method: 'GET',
     })
     .then((response) => {
-      console.log(`[Exchange Response] okcoin Response: ${JSON.stringify(response)}`);
+//      console.log(`[Exchange Response] okcoin Response: ${JSON.stringify(response)}`);
       return { exchange: 'okcoin', response };
     });
   },
