@@ -11,6 +11,7 @@ class App extends Component {
   constructor(props, context) {
     super(props, context);
   }
+
   componentDidMount() {
     this.props.loadExchangeActions.loadAllExchangeTicker('btc');
   }
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Dashboard />
+        <Dashboard tickers={this.props.ticker.data} />
       </div>
     );
   }
