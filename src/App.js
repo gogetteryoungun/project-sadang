@@ -8,7 +8,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class App extends Component {
-
+  constructor(props, context) {
+    super(props, context);
+  }
   componentDidMount() {
     this.props.loadExchangeActions.loadAllExchangeTicker('btc');
   }
@@ -23,10 +25,16 @@ class App extends Component {
   }
 }
 
+function mapStateToProps(state, ownProps) {
+  return {
+    ticker: state.ticker,
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     loadExchangeActions: bindActionCreators(actions, dispatch)
   };
 }
 
-export default connect(undefined, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

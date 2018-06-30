@@ -13,7 +13,7 @@ const exchangeApi = {
   korbit: (currency) => {
     const currencyPair=`${currency}-krw`
     return request({
-      url: `hhttps://api.korbit.co.kr/v1/ticker${currencyPair}`,
+      url: `https://api.korbit.co.kr/v1/ticker${currencyPair}`,
       method: 'GET',
     })
     .then((response) => {
@@ -21,7 +21,13 @@ const exchangeApi = {
     });
   },
   coinone: (currency) => {
-    
+    return request({
+      url: `https://api.coinone.co.kr/ticker/${currency}`,
+      method: 'GET',
+    })
+    .then((response) => {
+      console.log(`[Exchange Response] Coinone Response: ${JSON.stringify(response)}`);
+    });
   }
 };
 
