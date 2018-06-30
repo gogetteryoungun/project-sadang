@@ -20,7 +20,9 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Dashboard tickers={this.props.ticker.data} />
+        <div className="container">
+          <Dashboard tickers={this.props.ticker.data} />
+        </div>
       </div>
     );
   }
