@@ -1,16 +1,24 @@
 import _ from 'lodash';
+import Promise from 'bluebird';
 import exchangeApi from './middleware';
 
-const showExchangeTicker = (response) => {
+const showExchangeTicker = (responses) => {
+    const response = { data: responses };
   return { type: 'SHOW_EXCHANGE_TICKER', response };
 }
 
 export const loadAllExchangeTicker = (currency) => {
-  console.log(`all exchanges=${_.keysIn(exchangeApi)}`);
+  const exchanges = _.keysIn(exchangeApi);
     return (dispatch) => {
-      return exchangeApi.bithumb(currency)
-      .then((response) => {
-        dispatch(showExchangeTicker(response));
+      return Promise.map(exchanges, (exchange) => {
+        return exchangeApi[exchange](currency)
+        .then((response) => {
+          return response;
+        });
+      })
+      .then((responses) => {
+        console.log(`responses=${JSON.stringify(responses)}`);
+        dispatch(showExchangeTicker(responses));
       });
     };
 };
