@@ -2,10 +2,26 @@ import _ from 'lodash';
 import Promise from 'bluebird';
 import exchangeApi from './middleware';
 
+/*
+ * Description: dispatches which currency to be selected.
+*/
+
+const _changeSelectedCurrency = (currency) => {
+  const response = { 'selectedCurrency': currency };
+  return { type: 'CHANGE_DASHBOARD_CURRENCY', response };
+};
+
+export const changeSelectedCurrency = (currency) => {
+  return (dispatch) => {
+    dispatch(_changeSelectedCurrency(currency));
+    loadAllExchangeTicker(currency);
+  };
+};
+
 const showExchangeTicker = (responses) => {
     const response = { data: responses };
-  return { type: 'SHOW_EXCHANGE_TICKER', response };
-}
+    return { type: 'SHOW_EXCHANGE_TICKER', response };
+};
 
 export const loadAllExchangeTicker = (currency) => {
   const exchanges = _.keysIn(exchangeApi);
@@ -19,6 +35,7 @@ export const loadAllExchangeTicker = (currency) => {
     .then((responses) => {
       Promise.all(responses).then(function(items) {
         let arr = [];
+        let korbitPrice = 0;
         for (let item of items) {
           var ticker = {};
           ticker.exchange = item.exchange;
@@ -28,6 +45,7 @@ export const loadAllExchangeTicker = (currency) => {
             case 'korbit':
             ticker.price = Number.parseInt(data.last);
             ticker.volume = Number.parseInt(data.volume);
+            korbitPrice = data.last;
             break;
 
             case 'bithumb':
@@ -58,6 +76,15 @@ export const loadAllExchangeTicker = (currency) => {
           }
 
           arr.push(ticker);
+        }
+
+        console.log(`korbit.price: ${korbitPrice}`);
+        for (var item of arr) {
+          console.log(`item: ${JSON.stringify(item)}`);
+          item.priceDifference = (item.price - korbitPrice) / korbitPrice * 100;
+          item.priceDifference = item.priceDifference.toFixed(2);
+          console.log(`${item.priceDifference}`);
+
         }
 
         console.log(`arr: ${JSON.stringify(arr)}`);

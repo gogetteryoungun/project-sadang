@@ -13,13 +13,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.loadExchangeActions.loadAllExchangeTicker('btc');
+    const defaultCurrency = 'btc';
+    this.props.loadExchangeActions.changeSelectedCurrency(defaultCurrency);
+    this.props.loadExchangeActions.loadAllExchangeTicker(defaultCurrency);
   }
 
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header currency={this.props.currency.selectedCurrency} />
         <div className="container">
           <Dashboard tickers={this.props.ticker.data} />
         </div>
@@ -31,6 +33,7 @@ class App extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     ticker: state.ticker,
+    currency: state.selectedCurrency,
   };
 }
 

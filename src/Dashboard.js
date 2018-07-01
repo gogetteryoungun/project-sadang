@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
+import * as actions from './actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Dashboard extends Component {
 
@@ -8,7 +11,6 @@ class Dashboard extends Component {
   }
 
   componentWillUpdate(nextState) {
-//    console.log("dashboard.willUpdate: " + JSON.stringify(nextState));
   }
 
   render() {
@@ -16,16 +18,15 @@ class Dashboard extends Component {
       return <div>Loading...</div>
     }
 
-    console.log("dashboard.render: " + JSON.stringify(this.props.tickers));
-    console.log(`props.tickers: ${ this.props.tickers[0] }`);
     return (
       <Table responsive hover>
         <thead>
           <tr>
-            <th key="exchange" class="text-center">Exchange</th>
-            <th key="price" class="text-center">Price</th>
-            <th key="volume" class="text-center">Volume</th>
-            <th key="price-difference" class="text-center">Price Difference</th>
+            <th key="exchange" className="text-center">Exchange</th>
+            <th key="price" className="text-center">Price</th>
+            <th key="volume" className="text-center">Volume</th>
+            <th key="price-difference" className="text-center">Price Difference
+            (vs. Korbit)</th>
           </tr>
         </thead>
         <tbody>
@@ -42,4 +43,18 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+
+function mapStateToProps(state, ownProps) {
+  return {
+    ticker: state.ticker,
+    currency: state.selectedCurrency,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    loadExchangeActions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
